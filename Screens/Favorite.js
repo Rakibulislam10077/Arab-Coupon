@@ -94,9 +94,9 @@ const Favorite = ({ navigation, }) => {
             </View>
             <Divider style={{ width: '90%', alignSelf: 'center' }} />
             {
-                selectedTab == 0 ? (<FavoriteStore />)
+                selectedTab == 0 ? (<FavoriteStore navigation={navigation} />)
                     :
-                    (<FavoriteCoupon />)
+                    (<FavoriteCoupon navigation={navigation} />)
             }
 
         </SafeAreaView>

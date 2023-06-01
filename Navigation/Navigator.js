@@ -11,6 +11,7 @@ import ViewStore from '../components/ViewStore';
 import Store from '../Screens/Store';
 import Notifications from '../components/Notifications';
 import Profile from '../components/Profile';
+import OfferBottomSheet from '../components/OfferBottomSheet';
 
 
 const Stack = createNativeStackNavigator();
@@ -69,6 +70,7 @@ const Navigator = () => {
                 options={{ headerShown: false }}
                 name='Notifications' component={Notifications} />
             <Stack.Screen name='Profile' component={Profile} />
+            <Stack.Screen options={{ headerShown: false }} name='OfferBottomSheet' component={OfferBottomSheet} />
         </Stack.Navigator>
 
     )
