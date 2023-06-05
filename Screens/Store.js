@@ -1,64 +1,62 @@
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView } from 'react-native'
-import React from 'react'
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, FlatList, } from 'react-native'
+import React, { useEffect } from 'react'
 import { Divider } from 'react-native-paper';
 import { Svg, Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
-import { FlatGrid } from 'react-native-super-grid';
 
 const Store = ({ navigation }) => {
-    const DATA = [
-        { id: 1, name: 'Trending' },
-        { id: 2, name: 'Newest' },
-        { id: 3, name: 'Fashion' },
-        { id: 4, name: 'Electronics' },
-        { id: 5, name: 'Trending' },
-        { id: 6, name: 'Trending' },
-        { id: 7, name: 'Trending' },
-        { id: 8, name: 'Trending' },
-        { id: 9, name: 'Trending' },
-        { id: 10, name: 'Trending' },
-        { id: 11, name: 'Trending' },
-        { id: 12, name: 'Trending' },
-        { id: 13, name: 'Trending' },
-        { id: 14, name: 'Trending' },
-    ]
+
+    const [data, setData] = React.useState([]);
+    useEffect(() => {
+        const url = `https://arabcoupon-mobile-app-server.vercel.app/store`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setData(data))
+            .catch()
+            .finally()
+    }, [])
+
+
+
+
+    // const DATA = [
+    //     { id: 1, name: 'Trending' },
+    //     { id: 2, name: 'Newest' },
+    //     { id: 3, name: 'Fashion' },
+    //     { id: 4, name: 'Electronics' },
+    //     { id: 5, name: 'Trending' },
+    //     { id: 6, name: 'Trending' },
+    //     { id: 7, name: 'Trending' },
+    //     { id: 8, name: 'Trending' },
+    //     { id: 9, name: 'Trending' },
+    //     { id: 10, name: 'Trending' },
+    //     { id: 11, name: 'Trending' },
+    //     { id: 12, name: 'Trending' },
+    //     { id: 13, name: 'Trending' },
+    //     { id: 14, name: 'Trending' },
+    // ]
+
+
+
+    // render Item for every single store 
     renderItem = ({ item }) => {
         return (
             <TouchableOpacity
                 onPress={() => navigation.navigate('ViewStore')}
-                style={{
-                    marginTop: 20,
-                    width: '47%',
-                    marginLeft: '3.5%',
-                    height: 200,
-                    backgroundColor: '#fff',
-                    borderRadius: 20,
-                    shadowColor: '#171717',
-                    shadowOffset: { width: 2, height: 4 },
-                    shadowOpacity: 0.2,
-                    elevation: 40,
-                    shadowColor: '#797979',
-
-                }}>
+                style={styles.store}>
                 <Text>{item.name}</Text>
             </TouchableOpacity>
         )
     }
+
+
+
+
     return (
 
         <SafeAreaView>
             <View style={{ marginBottom: 10 }}>
-                <View style={{
-                    backgroundColor: '#fff',
-                    padding: 20,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                }}>
-                    <View style={{
-                        flexDirection: 'row',
-                        height: 40,
-                        alignItems: 'center',
-                    }}>
+                <View style={styles.headingCon}>
+                    <View style={styles.headingAndArrow}>
                         <TouchableOpacity
                             onPress={() => navigation.goBack()}
                             style={{ opacity: .8 }}>
@@ -73,23 +71,11 @@ const Store = ({ navigation }) => {
                                 </Defs>
                             </Svg>
                         </TouchableOpacity>
-                        <Text style={{
-                            marginLeft: 22,
-                            fontSize: 18,
-                            fontWeight: 700,
-                        }}>Coupons Stores</Text>
+                        <Text style={styles.heading}>Coupons Stores</Text>
                     </View>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Search')}
-                        style={{
-                            height: 40,
-                            width: 40,
-                            borderColor: '#e6e6e6',
-                            borderWidth: 2,
-                            borderRadius: 40,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}>
+                        style={styles.search}>
                         <View style={{ opacity: .5 }}>
                             <Svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <G clip-path="url(#clip0_106_1688)">
@@ -112,29 +98,16 @@ const Store = ({ navigation }) => {
 
                 {/* this is Top Stores  section*/}
 
-                <View style={{ paddingVertical: 20, paddingLeft: 20, backgroundColor: '#fff' }}>
-                    <Text style={{
-                        fontSize: 16,
-                        color: '#000', opacity: .5,
-                        marginBottom: 20,
-                    }}>Top Used Store</Text>
+                <View style={styles.topStoreCon}>
+                    <Text style={styles.topStoreHeading}>Top Used Store</Text>
                     <FlatList
-                        data={DATA}
+                        data={data}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => <TouchableOpacity onPress={() => navigation.navigate('ViewStore')}>
                             <View style={{ maxWidth: 150 }}>
                                 <View
-                                    style={{
-                                        width: 60,
-                                        height: 60,
-                                        marginRight: 35,
-                                        borderRadius: 40,
-                                        borderWidth: 2,
-                                        borderColor: '#e6e6e6',
-                                        marginBottom: 15,
-
-                                    }}
+                                    style={styles.topUsedItem}
                                     keyExtractor={item => item.id}
                                 >
                                 </View>
@@ -147,15 +120,16 @@ const Store = ({ navigation }) => {
 
             {/* this is all store section */}
 
-            <View style={{ backgroundColor: '#fff', paddingVertical: 20 }}>
-                <Text style={{ fontSize: 16, opacity: .5, marginBottom: 20, marginLeft: 20 }}>All Stores</Text>
+            <View style={styles.allStoreMainCon}>
+                <Text style={styles.allStoreText}>All Stores</Text>
                 <FlatList
                     contentContainerStyle={{ paddingRight: 20, justifyContent: 'space-between' }}
-                    data={DATA}
+                    data={data}
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
-                    scrollEnabled={true}
+                    // scrollEnabled={true}
                     renderItem={this.renderItem}
+                    height={655}
                 />
             </View>
 
@@ -165,4 +139,80 @@ const Store = ({ navigation }) => {
 
 export default Store
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    headingCon: {
+        backgroundColor: '#fff',
+        padding: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    headingAndArrow: {
+        flexDirection: 'row',
+        height: 40,
+        alignItems: 'center',
+    },
+    heading: {
+        marginLeft: 22,
+        fontSize: 18,
+        fontWeight: 700,
+    },
+    search: {
+        height: 40,
+        width: 40,
+        borderColor: '#e6e6e6',
+        borderWidth: 2,
+        borderRadius: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    topStoreCon: {
+        paddingVertical: 20,
+        paddingLeft: 20,
+        backgroundColor: '#fff'
+    },
+    topStoreHeading: {
+        fontSize: 16,
+        color: '#000', opacity: .5,
+        marginBottom: 20,
+    },
+    topUsedItem: {
+        width: 60,
+        height: 60,
+        marginRight: 35,
+        borderRadius: 40,
+        borderWidth: 2,
+        borderColor: '#e6e6e6',
+        marginBottom: 15,
+    },
+    allStoreMainCon: {
+        paddingVertical: 20,
+        backgroundColor: '#fff'
+    },
+    allStoreText: {
+        fontSize: 16,
+        opacity: .5,
+        marginBottom: 20,
+        marginLeft: 20
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white'
+    },
+    flatList: {
+        height: 50,
+        backgroundColor: 'red'
+    },
+    store: {
+        marginTop: 20,
+        width: '47%',
+        marginLeft: '3.5%',
+        height: 200,
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        shadowColor: 'lightgrey',
+        elevation: 40,
+    }
+})

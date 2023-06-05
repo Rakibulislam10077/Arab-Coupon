@@ -8,17 +8,7 @@ import FavoriteCoupon from '../components/FavoriteCoupon';
 const Favorite = ({ navigation, }) => {
     const [storeActive, setStoreActive] = React.useState(false);
     const [selectedTab, setSelectedTab] = React.useState(0)
-    const [showStore, setShowStore] = React.useState(false);
-    const [couponActive, setCouponActive] = React.useState(false);
-    const [showCoupon, setShowCoupon] = React.useState(false)
-    const storeBtn = () => {
-        setStoreActive(true);
-        setShowStore(true)
-    }
-    const couponBtn = () => {
-        setCouponActive(true);
-        setShowCoupon(true);
-    }
+
     return (
         <SafeAreaView>
             <View>

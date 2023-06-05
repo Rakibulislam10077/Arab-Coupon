@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } fr
 import React from 'react';
 import { Svg, Path } from 'react-native-svg';
 import { Divider } from 'react-native-paper';
-import OfferBottomSheet from '../components/OfferBottomSheet';
+
 
 const Account = ({ navigation }) => {
     return (
@@ -67,6 +67,7 @@ const Account = ({ navigation }) => {
                             <Text style={styles.text}>Favorite</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
+                            onPress={() => navigation.navigate('MyProfile')}
                             activeOpacity={.5}
                             style={styles.accountSubCon}>
                             <View style={{ marginRight: 23 }}>
@@ -99,7 +100,7 @@ const Account = ({ navigation }) => {
                         </View>
                         <View>
                             <Text style={styles.talkText}>Talk to Us</Text>
-                            <Text style={styles.whatsDres}>Need help? Chat with us by whatsapp</Text>
+                            <Text style={styles.whatsDesc}>Need help? Chat with us by whatsapp</Text>
                         </View>
                     </View>
                     <View style={styles.social}>
@@ -112,7 +113,7 @@ const Account = ({ navigation }) => {
                         </View>
                         <View>
                             <Text style={styles.talkText}>Talk to Us</Text>
-                            <Text style={styles.whatsDres}>Need help? Chat with us by whatsapp</Text>
+                            <Text style={styles.whatsDesc}>Need help? Chat with us by whatsapp</Text>
                         </View>
                     </View>
                     <View style={styles.social}>
@@ -124,7 +125,7 @@ const Account = ({ navigation }) => {
                         </View>
                         <View>
                             <Text style={styles.talkText}>Talk to Us</Text>
-                            <Text style={styles.whatsDres}>Need help? Chat with us by whatsapp</Text>
+                            <Text style={styles.whatsDesc}>Need help? Chat with us by whatsapp</Text>
                         </View>
                     </View>
                     <View style={styles.social}>
@@ -137,7 +138,7 @@ const Account = ({ navigation }) => {
                         </View>
                         <View>
                             <Text style={styles.talkText}>Talk to Us</Text>
-                            <Text style={styles.whatsDres}>Need help? Chat with us by whatsapp</Text>
+                            <Text style={styles.whatsDesc}>Need help? Chat with us by whatsapp</Text>
                         </View>
                     </View>
                     <View style={styles.social}>
@@ -150,7 +151,7 @@ const Account = ({ navigation }) => {
                         </View>
                         <View>
                             <Text style={styles.talkText}>Talk to Us</Text>
-                            <Text style={styles.whatsDres}>Need help? Chat with us by whatsapp</Text>
+                            <Text style={styles.whatsDesc}>Need help? Chat with us by whatsapp</Text>
                         </View>
                     </View>
                 </View>
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
         opacity: .8,
         marginBottom: 8,
     },
-    whatsDres: {
+    whatsDesc: {
         fontSize: 14,
         opacity: .4,
     }
