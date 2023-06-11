@@ -15,6 +15,8 @@ import Notifications from '../components/Notifications';
 import Profile from '../components/Profile';
 import OfferBottomSheet from '../components/OfferBottomSheet';
 import MyProfile from '../components/MyProfile';
+import Login from '../components/Login';
+import SignUp from '../components/SignUp';
 
 
 const Stack = createNativeStackNavigator();
@@ -180,6 +182,13 @@ const Navigator = () => {
             <Stack.Screen
                 options={{ headerShown: false }}
                 name='MyProfile' component={MyProfile} />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name='Login' component={Login} />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name='SignUp' component={SignUp} />
+
         </Stack.Navigator>
 
     )

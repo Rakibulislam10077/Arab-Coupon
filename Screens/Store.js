@@ -1,40 +1,32 @@
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, FlatList, } from 'react-native'
+import { SafeAreaView, StyleSheet, Image, Text, View, TouchableOpacity, FlatList, ActivityIndicator, RefreshControl } from 'react-native'
 import React, { useEffect } from 'react'
 import { Divider } from 'react-native-paper';
 import { Svg, Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
 
 const Store = ({ navigation }) => {
-
+    const [refreshing, setRefreshing] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
     const [data, setData] = React.useState([]);
     useEffect(() => {
-        const url = `https://arabcoupon-mobile-app-server.vercel.app/store`;
+        const url = `https://jsonplaceholder.typicode.com/users`;
         fetch(url)
             .then(res => res.json())
             .then(data => setData(data))
-            .catch()
-            .finally()
+            .catch(err => {
+                console.warn(err)
+            })
+            .finally(() => setIsLoading(false))
     }, [])
 
 
+    // refreshing controller
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
 
-
-    // const DATA = [
-    //     { id: 1, name: 'Trending' },
-    //     { id: 2, name: 'Newest' },
-    //     { id: 3, name: 'Fashion' },
-    //     { id: 4, name: 'Electronics' },
-    //     { id: 5, name: 'Trending' },
-    //     { id: 6, name: 'Trending' },
-    //     { id: 7, name: 'Trending' },
-    //     { id: 8, name: 'Trending' },
-    //     { id: 9, name: 'Trending' },
-    //     { id: 10, name: 'Trending' },
-    //     { id: 11, name: 'Trending' },
-    //     { id: 12, name: 'Trending' },
-    //     { id: 13, name: 'Trending' },
-    //     { id: 14, name: 'Trending' },
-    // ]
-
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
 
     // render Item for every single store 
@@ -43,7 +35,10 @@ const Store = ({ navigation }) => {
             <TouchableOpacity
                 onPress={() => navigation.navigate('ViewStore')}
                 style={styles.store}>
-                <Text>{item.name}</Text>
+                <View>
+                    <Text>{item.name}</Text>
+                    <Text>{item.email}</Text>
+                </View>
             </TouchableOpacity>
         )
     }
@@ -100,21 +95,30 @@ const Store = ({ navigation }) => {
 
                 <View style={styles.topStoreCon}>
                     <Text style={styles.topStoreHeading}>Top Used Store</Text>
-                    <FlatList
-                        data={data}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        renderItem={({ item }) => <TouchableOpacity onPress={() => navigation.navigate('ViewStore')}>
-                            <View style={{ maxWidth: 150 }}>
-                                <View
-                                    style={styles.topUsedItem}
-                                    keyExtractor={item => item.id}
-                                >
-                                </View>
-                                <Text>{item.name}</Text>
-                            </View>
-                        </TouchableOpacity>}
-                    />
+                    {
+                        isLoading ?
+                            <ActivityIndicator color={'#797979'} size={'small'} />
+                            : 
+                            <FlatList
+                                data={data}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                renderItem={({ item }) => <TouchableOpacity
+                                    activeOpacity={.7}
+                                    style={{ width: 70, marginRight: 20, paddingTop: 20, }}
+                                    onPress={() => navigation.navigate('ViewStore')}>
+                                    <View>
+                                        <View
+                                            style={styles.topUsedItem}
+                                            keyExtractor={item => item.id}
+                                        >
+                                            <Image />
+                                        </View>
+                                        <Text>{item.name.slice(0, 8)}</Text>
+                                    </View>
+                                </TouchableOpacity>}
+                            />
+                    }
                 </View>
             </View>
 
@@ -122,15 +126,22 @@ const Store = ({ navigation }) => {
 
             <View style={styles.allStoreMainCon}>
                 <Text style={styles.allStoreText}>All Stores</Text>
-                <FlatList
-                    contentContainerStyle={{ paddingRight: 20, justifyContent: 'space-between' }}
-                    data={data}
-                    showsVerticalScrollIndicator={false}
-                    numColumns={2}
-                    // scrollEnabled={true}
-                    renderItem={this.renderItem}
-                    height={655}
-                />
+                {
+                    isLoading ? <ActivityIndicator />
+                        : 
+                        <FlatList
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                            }
+                            contentContainerStyle={{ paddingRight: 20, justifyContent: 'space-between' }}
+                            data={data}
+                            showsVerticalScrollIndicator={false}
+                            numColumns={2}
+                            // scrollEnabled={true}
+                            renderItem={this.renderItem}
+                            height={655}
+                        /> 
+                }
             </View>
 
         </SafeAreaView>
@@ -174,16 +185,25 @@ const styles = StyleSheet.create({
     topStoreHeading: {
         fontSize: 16,
         color: '#000', opacity: .5,
-        marginBottom: 20,
+
     },
     topUsedItem: {
         width: 60,
         height: 60,
         marginRight: 35,
         borderRadius: 40,
-        borderWidth: 2,
-        borderColor: '#e6e6e6',
+        shadowColor: '#797979',
+        elevation: 20,
+        shadowOffset: {
+            width: 0,
+            height: 10
+        },
+        backgroundColor: '#fff',
         marginBottom: 15,
+    },
+    topItem: {
+        shadowColor: '#797979',
+        elevation: 10
     },
     allStoreMainCon: {
         paddingVertical: 20,
