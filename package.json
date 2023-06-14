@@ -19,6 +19,7 @@
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.71.7",
+    "react-native-app-intro-slider": "^4.0.4",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-image-slider-box": "^2.0.7",
     "react-native-paper": "^5.8.0",

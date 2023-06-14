@@ -17,6 +17,7 @@ import OfferBottomSheet from '../components/OfferBottomSheet';
 import MyProfile from '../components/MyProfile';
 import Login from '../components/Login';
 import SignUp from '../components/SignUp';
+import Onboard from '../components/onboarding/Onboard';
 
 
 const Stack = createNativeStackNavigator();
@@ -188,7 +189,9 @@ const Navigator = () => {
             <Stack.Screen
                 options={{ headerShown: false }}
                 name='SignUp' component={SignUp} />
-
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name='Onboard' component={Onboard} />
         </Stack.Navigator>
 
     )
